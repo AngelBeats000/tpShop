@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @Author: Huang LongPan
+ * @Date:   2019-05-30 16:41:42
+ * @Last Modified by:   Huang LongPan
+ * @Last Modified time: 2019-06-02 20:55:57
+ */
+namespace app\common\model;
+use think\Model;
+
+/**
+ * 
+ */
+class AlternateImg extends Model
+{
+	
+	public function getAlternateImg($limit=5){
+		$AlternateRes=$this->where('status',1)->order('sort desc')->limit($limit)->select();
+		return $AlternateRes;
+	}
+}

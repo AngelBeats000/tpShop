@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:81:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/index\view\index\index.htm";i:1559206006;s:81:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/index\view\common\head.htm";i:1559550175;s:83:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/index\view\common\footer.htm";i:1559549771;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:81:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/index\view\index\index.htm";i:1559206006;s:81:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/index\view\common\head.htm";i:1560412596;s:83:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/index\view\common\footer.htm";i:1559549771;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -35,6 +35,7 @@ var load_icon = '<img src="__index__/img/load/load.gif" width="200" height="200"
     var logout_url="<?php echo url('member/User/logout'); ?>";
     var login="<?php echo url('member/Account/login'); ?>";
     var reg="<?php echo url('member/Account/reg'); ?>";
+    var cart_goods_num="<?php echo url('index/Flow/CartGoodsNum'); ?>";
 </script>
 <div class="site-nav" id="site-nav">
     <div class="w w1390">
@@ -85,9 +86,10 @@ var load_icon = '<img src="__index__/img/load/load.gif" width="200" height="200"
 	<a href="#">
 		<i class="iconfont icon-carts"></i>
 		<span>我的购物车</span>
-		<em class="count cart_num">0</em>
+		<em id="cart_goods_num" class="count cart_num">0</em>
 	</a>
 </div>
+
 <div class="dorpdown-layer" ectype="dorpdownLayer">
         <div class="prompt"><div class="nogoods"><b></b><span>购物车中还没有商品，赶紧选购吧！</span></div></div>
     </div>

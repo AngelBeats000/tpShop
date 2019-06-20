@@ -4,7 +4,7 @@
  * @Author: Huang LongPan
  * @Date:   2019-06-01 14:52:46
  * @Last Modified by:   Huang LongPan
- * @Last Modified time: 2019-06-04 15:04:14
+ * @Last Modified time: 2019-06-15 11:16:30
  */
 namespace app\member\controller;
 use think\Controller;
@@ -43,11 +43,12 @@ class Account extends Base
 	}
 
 	//登录
-	public function login(){
+	public function login($type=0){
 		if(!session('uid')){
 			if(request()->isPost()){
 				$data=input('post.');
-				return model('Account')->login($data);
+				$backAct=$data['back_act'];
+				return model('Account')->login($data,$type,$backAct);
 			}
 			
 			return view();

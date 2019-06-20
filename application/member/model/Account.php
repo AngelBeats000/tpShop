@@ -4,7 +4,7 @@
  * @Author: Huang LongPan
  * @Date:   2019-06-02 15:05:13
  * @Last Modified by:   Huang LongPan
- * @Last Modified time: 2019-06-05 15:03:23
+ * @Last Modified time: 2019-06-15 11:17:18
  */
 namespace app\member\model;
 use think\Model;
@@ -96,7 +96,7 @@ class Account extends Model
 	}
 
 	//登录
-	public function login($data,$type=0){
+	public function login($data,$type=0,$backAct='#'){
 		$userData=array();
 		$userData['username']=$data['username'];
 		$userData['password']=md5($data['password']);
@@ -118,6 +118,7 @@ class Account extends Model
 				 $arr=[
                     'error'=>0,
                     'message'=>"",
+                    'url'=>$backAct
                 ];
                 if($type==1){
                 	return $arr;
@@ -128,7 +129,7 @@ class Account extends Model
 				$arr=[
 	                'error'=>1,
 	                'message'=>"<i class='iconfont icon-minus-sign'></i>用户名或者密码错误",
-	                'url'=>'',
+	                'url'=>$backAct,
                 ];
                 if($type==1){
                 	return $arr;

@@ -4,7 +4,7 @@
  * @Author: Huang LongPan
  * @Date:   2019-06-08 22:24:30
  * @Last Modified by:   Huang LongPan
- * @Last Modified time: 2019-06-12 21:53:27
+ * @Last Modified time: 2019-06-17 19:25:01
  */
 namespace app\index\model;
 use think\Model;
@@ -86,21 +86,48 @@ class Cart extends Model
 	}
 
 	/**
-	 * 获取购物车信息
-	 * @return [type] [description]
+	 * 计算购物车数量
 	 */
-	public function getGoodsListInCart(){
+	public function CartGoodsNum(){
+		$cart=isset($_COOKIE['cart']) ?  unserialize($_COOKIE['cart']) : array();
+		$num=0;
+		foreach ($cart as $k => $v) {
+			$num += $v;
+		}
+		return json(['cart_goods_num'=>$num]);
+	}
+
+	/**
+	 * 获取购物车信息
+	 * @param  string $doGoods [判断是否是提交订单页面的购物车数据]
+	 * @return [type]          [description]
+	 */
+	public function getGoodsListInCart($doGoods=''){
 		$goods=model('Goods');
 		$cart=isset($_COOKIE['cart']) ? unserialize($_COOKIE['cart']) : array();
+
+		//提交订单时，删除购物车数组中未选择的商品
+		if($doGoods){
+			$doGoodsArr=explode('|',$doGoods);
+			foreach ($cart as $k => $v) {
+				if(!in_array($k, $doGoodsArr)){
+					unset($cart[$k]);
+				}
+			}
+		}
+		// 提交订单部分结束
+
 		$_cart=array();
 		foreach ($cart as $k => $v) {
 			$arr=explode('-',$k);
 			// 商品信息获取开始
-			$goodsInfo=$goods->field('id,goods_name,sm_thumb,shop_price')->find($arr[0]);
+			$goodsInfo=$goods->field('id,goods_name,sm_thumb,shop_price,markte_price')->find($arr[0]);
 			$memberPrice=$goods->getMemberPrice($arr[0],$goodsInfo['shop_price']);
 			$_cart[$k]['goods_name']=$goodsInfo['goods_name'];
 			$_cart[$k]['sm_thumb']=$goodsInfo['sm_thumb'];
-			$_cart[$k]['shop_price']=$memberPrice;
+			$_cart[$k]['shop_price']=$memberPrice;   //会员价
+			$_cart[$k]['member_price']=$goodsInfo['shop_price']; //本店价，单词错误，懒得改
+			$_cart[$k]['markte_price']=$goodsInfo['markte_price'];//市场价
 			$_cart[$k]['number']=$v;
 			$_cart[$k]['id']=$arr[0];
 			$_cart[$k]['goods_id_attr_id']=$k;    //单独保存$k，用于区分复选框同一商品，不同属性
@@ -165,4 +192,42 @@ class Cart extends Model
 
 		return $_cart;
 	}
+
+	/**
+	 * 计算支付商品的总价
+	 * @param  string $doGoods [商品id-属性|字符串]
+	 * @return [type]          [商品总价]
+	 */
+	public function doGoodsPriceCount($doGoods=''){
+		$goods=model('goods');
+		$recIdArr=explode('|',$doGoods);
+		$cart=isset($_COOKIE['cart']) ? unserialize($_COOKIE['cart']) : array();
+		//删除未选定的购物车中的商品
+		foreach ($cart as $k => $v) {
+			// $arr=explode('-',$k);
+			if(!in_array($k,$recIdArr)){
+				unset($cart[$k]);
+			}
+		}
+
+		$_cart['goods_amount']=0;  //商品总金额
+		foreach ($cart as $k => $v) {
+			//开始计算总金额
+			$arr=explode('-',$k);
+			$goodsInfo=$goods->field('shop_price')->find($arr[0]);
+			$memberPrice=$goods->getMemberPrice($arr[0],$goodsInfo['shop_price']);
+ 			
+ 			//计算节省的价格
+			if($arr[1]){
+				$goodsAttrRes=Db::name('goods_attr')->field('attr_price')->where('id','in',$arr[1])->select();
+				foreach ($goodsAttrRes as $k1 => $v1) {
+					$memberPrice += $v1['attr_price'];     //属性价格累计到商品价格
+				}
+			}
+			$_cart['goods_amount'] += $memberPrice * $v;
+		}
+		return $_cart['goods_amount'];
+	}
+
+
 }

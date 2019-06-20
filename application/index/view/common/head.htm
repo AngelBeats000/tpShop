@@ -3,6 +3,7 @@
     var logout_url="{:url('member/User/logout')}";
     var login="{:url('member/Account/login')}";
     var reg="{:url('member/Account/reg')}";
+    var cart_goods_num="{:url('index/Flow/CartGoodsNum')}";
 </script>
 <div class="site-nav" id="site-nav">
     <div class="w w1390">
@@ -53,9 +54,10 @@
 	<a href="#">
 		<i class="iconfont icon-carts"></i>
 		<span>我的购物车</span>
-		<em class="count cart_num">0</em>
+		<em id="cart_goods_num" class="count cart_num">0</em>
 	</a>
 </div>
+
 <div class="dorpdown-layer" ectype="dorpdownLayer">
         <div class="prompt"><div class="nogoods"><b></b><span>购物车中还没有商品，赶紧选购吧！</span></div></div>
     </div>

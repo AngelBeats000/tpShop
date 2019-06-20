@@ -27,6 +27,7 @@ var load_icon = '<img src="__index__/img/load.gif" width="200" height="200">';
     var reg="{:url('member/Account/reg')}";
     var ajax_cart_goods_amount="{:url('index/Flow/ajaxCartGoodsAmount')}";
     var cart_list="{:url('index/Flow/flow1')}";
+    var loginDailog="{:url('index/Flow/loginDailog')}";
 </script>
 
 <body class="bg-ligtGary">
@@ -420,7 +421,7 @@ var load_icon = '<img src="__index__/img/load.gif" width="200" height="200">';
             <input type="text" value="{$vo.number}" name="goods_number[8]" id="goods_number_8" onchange="change_goods_number('{$vo.goods_id_attr_id}', this.value, 2, 16)" class="text buy-num" ectype="number" defaultnumber="1">
         <div class="a-btn">
     	        <a href="#" onclick="changenum('{$vo.goods_id_attr_id}', 1, 2, 16,17,this)" class="btn-add"><i class="iconfont icon-up"></i></a>
-        <a href="#" onclick="changenum('{$vo.goods_id_attr_id}', -1, 2, 16,17,this)" class="btn-reduce btn-disabled"><i class="iconfont icon-down"></i></a>
+        <a href="#" onclick="changenum('{$vo.goods_id_attr_id}', -1, 2, 16,17,this)" {if condition="$vo.number eq 1"}  class="btn-reduce btn-disabled" {else /}  class="btn-reduce" {/if}><i class="iconfont icon-down"></i></a>
             </div>
     </div>
 <div class="tc ftx-03">有货</div>
@@ -463,8 +464,8 @@ var load_icon = '<img src="__index__/img/load.gif" width="200" height="200">';
     <div class="toolbar-right">
         <div class="comm-right">
             <div class="btn-area">
-                <form name="formCart" method="post" action="flow.php" onsubmit="return get_toCart();">
-                    <input name="goPay" type="submit" class="submit-btn" value="去支付"  id="go_pay" data-url="flow.php"/>
+                <form name="formCart" method="post" action="{:url('index/Flow/flow2')}" onsubmit="return get_toCart();">
+                    <input name="goPay" type="submit" class="submit-btn" value="去支付" {if condition="!$Think.session.username"} id="go_pay" {/if} data-url="{:url('index/Flow/flow1')}"/>
                     <input name="step" value="checkout" type="hidden" />
                     <input name="store_seller" value="" type="hidden" id="cart_store_seller" />
                     <input name="cart_value" id="cart_value" value="" type="hidden" />
@@ -674,6 +675,7 @@ var load_icon = '<img src="__index__/img/load.gif" width="200" height="200">';
 		
         function change_goods_number_response(result)
         {
+        	location.reload();
             var rec_id = result.rec_id;           
             if(result.error == 0){
                 $('#goods_number_' +rec_id).val(result.goods_number);//更新数量

@@ -16,3 +16,4 @@ Route::rule('index','index/Index/index','get',['ext'=>'html|htm']);
 Route::rule('category/:id','index/Category/index','get',['ext'=>'html|htm'],['id'=>'\d{1,3}']);
 Route::rule('goods/:id','index/Goods/index','get',['ext'=>'html|htm'],['id'=>'\d{1,4}']);
 Route::rule('flow1','index/Flow/flow1','get',['ext'=>'html|htm']);
+Route::rule('flow2','index/Flow/flow2','post',['ext'=>'html|htm']);

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:80:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/index\view\flow\flow1.htm";i:1560347847;s:83:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/index\view\common\footer.htm";i:1559549771;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:80:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/index\view\flow\flow1.htm";i:1560600821;s:83:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/index\view\common\footer.htm";i:1559549771;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -28,6 +28,7 @@ var load_icon = '<img src="__index__/img/load.gif" width="200" height="200">';
     var reg="<?php echo url('member/Account/reg'); ?>";
     var ajax_cart_goods_amount="<?php echo url('index/Flow/ajaxCartGoodsAmount'); ?>";
     var cart_list="<?php echo url('index/Flow/flow1'); ?>";
+    var loginDailog="<?php echo url('index/Flow/loginDailog'); ?>";
 </script>
 
 <body class="bg-ligtGary">
@@ -421,7 +422,7 @@ var load_icon = '<img src="__index__/img/load.gif" width="200" height="200">';
             <input type="text" value="<?php echo $vo['number']; ?>" name="goods_number[8]" id="goods_number_8" onchange="change_goods_number('<?php echo $vo['goods_id_attr_id']; ?>', this.value, 2, 16)" class="text buy-num" ectype="number" defaultnumber="1">
         <div class="a-btn">
     	        <a href="#" onclick="changenum('<?php echo $vo['goods_id_attr_id']; ?>', 1, 2, 16,17,this)" class="btn-add"><i class="iconfont icon-up"></i></a>
-        <a href="#" onclick="changenum('<?php echo $vo['goods_id_attr_id']; ?>', -1, 2, 16,17,this)" class="btn-reduce btn-disabled"><i class="iconfont icon-down"></i></a>
+        <a href="#" onclick="changenum('<?php echo $vo['goods_id_attr_id']; ?>', -1, 2, 16,17,this)" <?php if($vo['number'] == 1): ?>  class="btn-reduce btn-disabled" <?php else: ?>  class="btn-reduce" <?php endif; ?>><i class="iconfont icon-down"></i></a>
             </div>
     </div>
 <div class="tc ftx-03">有货</div>
@@ -464,8 +465,8 @@ var load_icon = '<img src="__index__/img/load.gif" width="200" height="200">';
     <div class="toolbar-right">
         <div class="comm-right">
             <div class="btn-area">
-                <form name="formCart" method="post" action="flow.php" onsubmit="return get_toCart();">
-                    <input name="goPay" type="submit" class="submit-btn" value="去支付"  id="go_pay" data-url="flow.php"/>
+                <form name="formCart" method="post" action="<?php echo url('index/Flow/flow2'); ?>" onsubmit="return get_toCart();">
+                    <input name="goPay" type="submit" class="submit-btn" value="去支付" <?php if(!\think\Session::get('username')): ?> id="go_pay" <?php endif; ?> data-url="<?php echo url('index/Flow/flow1'); ?>"/>
                     <input name="step" value="checkout" type="hidden" />
                     <input name="store_seller" value="" type="hidden" id="cart_store_seller" />
                     <input name="cart_value" id="cart_value" value="" type="hidden" />
@@ -770,6 +771,7 @@ var load_icon = '<img src="__index__/img/load.gif" width="200" height="200">';
 		
         function change_goods_number_response(result)
         {
+        	location.reload();
             var rec_id = result.rec_id;           
             if(result.error == 0){
                 $('#goods_number_' +rec_id).val(result.goods_number);//更新数量

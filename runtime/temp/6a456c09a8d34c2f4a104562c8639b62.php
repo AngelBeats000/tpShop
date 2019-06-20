@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:80:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/admin\view\goods\list.htm";i:1514962414;s:80:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/admin\view\common\top.htm";i:1508129371;s:81:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/admin\view\common\left.htm";i:1559306160;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:80:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/admin\view\goods\list.htm";i:1559805364;s:80:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/admin\view\common\top.htm";i:1508129371;s:81:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/admin\view\common\left.htm";i:1559306160;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">

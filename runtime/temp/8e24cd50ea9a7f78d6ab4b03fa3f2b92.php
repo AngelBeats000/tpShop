@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:80:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/admin\view\goods\edit.htm";i:1516677194;s:80:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/admin\view\common\top.htm";i:1508129371;s:81:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/admin\view\common\left.htm";i:1559306160;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:80:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/admin\view\goods\edit.htm";i:1561209962;s:80:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/admin\view\common\top.htm";i:1508129371;s:81:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/admin\view\common\left.htm";i:1561206852;}*/ ?>
 <!DOCTYPE html>
 <html><head>
         <meta charset="utf-8">
@@ -236,13 +236,13 @@
                         </a>
                         <ul class="submenu">
                             <li>
-                                <a href="#">
+                                <a href="<?php echo url('admin/Order/lst'); ?>">
                                     <span class="menu-text">订单列表</span>
                                     <i class="menu-expand"></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="<?php echo url('admin/Order/orderSelect'); ?>">
                                     <span class="menu-text">订单查询</span>
                                     <i class="menu-expand"></i>
                                 </a>
@@ -257,8 +257,14 @@
                         </a>
                         <ul class="submenu">
                             <li>
-                                <a href="<?php echo url('MemberLevel/lst'); ?>">
+                                <a href="<?php echo url('User/lst'); ?>">
                                     <span class="menu-text">会员列表</span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo url('MemberLevel/lst'); ?>">
+                                    <span class="menu-text">会员级别列表</span>
                                     <i class="menu-expand"></i>
                                 </a>
                             </li>
@@ -631,7 +637,7 @@
                                             </div>
                                             <div id="attr_list">
                                             <!-- 属性显示  -->
-                                            <?php foreach($attrRes as $k=>$v):if($v['attr_type'] == 1):
+                                            <?php foreach($attrRes as $k => $v):if($v['attr_type'] == 1):
                                                     $arrRido=explode(',', $v['attr_values']);
                                                 ?>
                                                     <!-- 单选 -->

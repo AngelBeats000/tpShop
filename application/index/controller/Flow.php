@@ -4,7 +4,7 @@
  * @Author: Huang LongPan
  * @Date:   2019-06-09 21:19:37
  * @Last Modified by:   Huang LongPan
- * @Last Modified time: 2019-06-20 09:42:40
+ * @Last Modified time: 2019-06-20 19:45:36
  */
 namespace app\index\controller;
 use think\Controller;
@@ -128,6 +128,16 @@ class Flow extends Base
          \QRcode::png($qrurl);
 	}
 
+	/**
+	 * 异步获取支付是否完成
+	 * @return [type] [description]
+	 */
+	public function getPayStatus(){
+		$outid=input('out_trade_no');
+		$payStatus=db('order')->where('out_trade_no',$outid)->value('pay_status');
+		return json(['payStatus'=>$payStatus]);
+	}
+
 	//支付宝支付成功页面
 	 public function paySuccess(){
         $arr = input('get.');
@@ -138,6 +148,13 @@ class Flow extends Base
             ]);
         return view();
 
+    }
+
+    // 微信支付成功
+    public function wxPaySuccess(){
+        $payPlus = PAY_PLUS.'./pay/wxpay/';
+        include($payPlus.'notify.php'); 
+        new \Notify();  
     }
 
     //支付宝支付完异步处理页面

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:84:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/member\view\account\login.htm";i:1559562274;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:84:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/member\view\account\login.htm";i:1561535034;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -110,7 +110,7 @@ var both_password_error = "<i class='iconfont icon-minus-sign'></i>您两次输�
 <div class="msg-error" style="display:none">账户名与密码不匹配，请重新输入</div>
             </div>
             <div class="form">
-<form name="formLogin" action="" method="post" onSubmit="userLogin();return false;">
+<form name="formLogin" action="<?php echo url('member/Account/login'); ?>" method="post" onSubmit="userLogin();return false;">
     <div class="item">
         <div class="item-info">
             <i class="iconfont icon-name"></i>

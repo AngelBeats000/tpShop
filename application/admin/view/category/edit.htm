@@ -104,6 +104,63 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">价格区间数</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="ps_num"  value="" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">筛选属性</label>
+                            <div class="col-sm-6">
+                                <?php 
+                                if($searchAttrArr):
+                                foreach ($searchAttrArr as $k => $v):
+                                    if($k == 0){
+                                        $opt = '[+]';
+                                    }else{
+                                        $opt = '[-]';
+                                    }
+                                ?>
+                                <div class="radio">
+                                    <a href="javascript:;" onclick="add(this);">{$opt}</a>
+                                    <select name="type_id[]">
+                                        <option value="">请选择</option>
+                                        
+                                        {volist name="typeRes" id="type"}
+                                        <?php
+                                            if($type['id'] == $v['type_id']){
+                                                $selected = 'selected="selected"';
+                                            }else{
+                                                $selected = '';
+                                            }
+                                        ?>
+                                        <option {$selected} value="{$type.id}">{$type.type_name}</option>
+                                        {/volist}
+                                    </select>
+                                    <select attr_id = "{$v.id}" name="attr_id[]">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                                <?php endforeach; else:?>
+                                <div class="radio">
+                                    <a href="javascript:;" onclick="add(this);">[+]</a>
+                                    <select name="type_id[]">
+                                        <option value="">请选择</option>
+                                        {volist name="typeRes" id="type"}
+                                        <option value="{$type.id}">{$type.type_name}</option>
+                                        {/volist}
+                                    </select>
+                                    <select name="attr_id[]">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            <?php endif;?>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="username" class="col-sm-2 control-label no-padding-right">显示到导航</label>
                             <div class="col-sm-6">
@@ -169,7 +226,50 @@
     <script src="__admin__/style/jquery.js"></script>
     <!--Beyond Scripts-->
     <script src="__admin__/style/beyond.js"></script>
-    
+    <script type="text/javascript">
+        $("select[name='type_id[]']").change(function(){
+            var _this = $(this);
+            var typeId = $(this).val();
+            var opt = "<option value=''>请选择</option>";
+            if(typeId){
+                $.ajax({
+                    type:'POST',
+                    url:"{:url('admin/Attr/ajaxGetAttr')}",
+                    data:{type_id:typeId},
+                    dataType:'json',
+                    success:function(data){
+                        var attrId = _this.next('select').attr("attr_id");
+                        $(data).each(function(k,v){
+                            if(attrId == v.id){
+                                var sel='selected="selected"';
+                            }else{
+                                var sel='';
+                            }
+                           opt += "<option "+sel+" value='"+v.id+"'>"+v.attr_name+"</option>";
+                        });
+                        _this.next('select').html(opt);
+                    }
+                });
+            }else{
+                $(this).next('select').html(opt);
+            }
+        });
+
+        function add(o){
+            var div = $(o).parent();
+            if($(o).html() == '[+]'){
+               var newdiv = div.clone(true);
+                newdiv.find("a").html('[-]');
+                div.after(newdiv); 
+            }else{
+                div.remove();
+            }
+            
+        }
+
+        $("select[name='type_id[]']").trigger("change");
+
+    </script>
 
 
 </body></html>

@@ -147,8 +147,30 @@ var load_icon = '<img src="__index__/img/load/load.gif" width="200" height="200"
             <dd>
     &nbsp;
 
-
-
+        <!--  //其他筛选条件的保持不变 -->
+        <?php 
+            $brand = input('brand');
+            if(!$brand){
+                $brand = 0;
+            }
+            $price = input('price');
+            if(!$price){
+                $price = 0;
+            }
+            $ob = input('ob');
+            if(!$ob){
+                $ob = 'xl';
+            }
+            $wb = input('wb');
+            if(!$wb){
+                $wb = 'desc';
+            }
+            $filter = input('filter_attr');
+            if(!$filter){
+                $arr = array_fill(0,count($attrRes),0);
+                $filter = implode('.', $arr);
+            }
+        ?>
 
 
                 
@@ -159,132 +181,36 @@ var load_icon = '<img src="__index__/img/load/load.gif" width="200" height="200"
     </div>
 	<div class="goods_list">
 		<ul class="attr_father">
+
+             <a href="" id="search"></a>
 			
-                        <li class="s-line">
-                <div class="s-l-wrap brand_img attr_list">
-                    <div class="s-l-tit brand_name_l">品牌：</div>
-                    <div class="s-l-value brand_select_more">
-                        <div class="all_a_z">
-<ul class="a_z">
-    <li class="all_brand curr">所有品牌</li>
-        <li data-key="A">A</li>
-        <li data-key="B">B</li>
-        <li data-key="C">C</li>
-        <li data-key="D">D</li>
-        <li data-key="E">E</li>
-        <li data-key="F">F</li>
-        <li data-key="G">G</li>
-        <li data-key="H">H</li>
-        <li data-key="I">I</li>
-        <li data-key="J">J</li>
-        <li data-key="K">K</li>
-        <li data-key="L">L</li>
-        <li data-key="M">M</li>
-        <li data-key="N">N</li>
-        <li data-key="O">O</li>
-        <li data-key="P">P</li>
-        <li data-key="Q">Q</li>
-        <li data-key="R">R</li>
-        <li data-key="S">S</li>
-        <li data-key="T">T</li>
-        <li data-key="U">U</li>
-        <li data-key="V">V</li>
-        <li data-key="W">W</li>
-        <li data-key="X">X</li>
-        <li data-key="Y">Y</li>
-        <li data-key="Z">Z</li>
-        <li class="other_brand">其他</li>
-</ul>
+            <li class="s-line">
+                <dl class="s-l-wrap">
+                    <div class="s-l-tit filter_attr_name">品牌：</div>
+                    <div class="s-l-value attr_son">
+                        <div class="price_auto fl">
+                             <div class="price_range"><a <?php if(!input('brand')) echo 'class="btn sc-redBg-btn"'; ?>  href="{:url('index/Category/index',array('id'=>input('id'), 'price'=>$price, 'filter_attr'=>$filter, 'ob'=>$ob, 'ow'=>$ow),'')}#search">不限</a></div>
+                            {volist name="brandRes" id="brand"}
+                                <div class="price_range"><a <?php if(input('brand')==$brand['brand_name']) echo 'class="btn sc-redBg-btn"'; ?> href="{:url('index/Category/index',array('id'=>input('id'),'brand'=>$brand['id'], 'price'=>$price, 'filter_attr'=>$filter, 'ob'=>$ob, 'ow'=>$ow),'')}#search">{$brand.brand_name}</a></div>
+                            {/volist}
                         </div>
-                        <div class="wrap_brand">  
-<div class="brand_div">
-        <div class="brand_img_word" brand ="E">
-                    <a href="#">
-            	<img src="__index__/img/1490071974970349584.jpg" alt="esprit" title="esprit"> 
-            	<span>esprit</span>
-            </a>
-            </div>
-        <div class="brand_img_word" brand ="X">
-                    <a href="#">
-            	<img src="__index__/img/1490072756032175204.jpg" alt="喜瑞" title="喜瑞"> 
-            	<span>喜瑞</span>
-            </a>
-            </div>
-        <div class="brand_img_word" brand ="L">
-                    <a href="#">
-            	<img src="__index__/img/1490072860522023692.jpg" alt="乐力" title="乐力"> 
-            	<span>乐力</span>
-            </a>
-            </div>
-        <div class="brand_img_word" brand ="L">
-                    <a href="#">
-            	<img src="__index__/img/1490074030328949587.jpg" alt="LG" title="LG"> 
-            	<span>LG</span>
-            </a>
-            </div>
-        <div class="brand_img_word" brand ="H">
-                    <a href="#">
-            	<img src="__index__/img/1490073591535005714.jpg" alt="鸿星尔克" title="鸿星尔克"> 
-            	<span>鸿星尔克</span>
-            </a>
-            </div>
-        <div class="brand_img_word" brand ="H">
-                    <a href="#">
-            	<img src="__index__/img/1490073577683159021.jpg" alt="华帝" title="华帝"> 
-            	<span>华帝</span>
-            </a>
-            </div>
-        <div class="brand_img_word" brand ="M">
-                    <a href="#">
-            	<img src="__index__/img/1490228075580091113.jpg" alt="麦斯威尔" title="麦斯威尔"> 
-            	<span>麦斯威尔</span>
-            </a>
-            </div>
-        <div class="brand_img_word" brand ="M">
-                    <a href="#">
-            	<img src="__index__/img/1490074901892372216.jpg" alt="美的" title="美的"> 
-            	<span>美的</span>
-            </a>
-            </div>
-    </div>
-                        </div>
-                        <div class="zimu_list">
-<ul class="get_more" >
-        <li class="is_no" brand ="E" url_id="71"><span class="choose_ico"></span><a class="goods_brand_name" data-url="category.php?id=347&amp;brand=71">esprit</a></li>
-        <li class="is_no" brand ="X" url_id="85"><span class="choose_ico"></span><a class="goods_brand_name" data-url="category.php?id=347&amp;brand=85">喜瑞</a></li>
-        <li class="is_no" brand ="L" url_id="94"><span class="choose_ico"></span><a class="goods_brand_name" data-url="category.php?id=347&amp;brand=94">乐力</a></li>
-        <li class="is_no" brand ="L" url_id="113"><span class="choose_ico"></span><a class="goods_brand_name" data-url="category.php?id=347&amp;brand=113">LG</a></li>
-        <li class="is_no" brand ="H" url_id="149"><span class="choose_ico"></span><a class="goods_brand_name" data-url="category.php?id=347&amp;brand=149">鸿星尔克</a></li>
-        <li class="is_no" brand ="H" url_id="150"><span class="choose_ico"></span><a class="goods_brand_name" data-url="category.php?id=347&amp;brand=150">华帝</a></li>
-        <li class="is_no" brand ="M" url_id="159"><span class="choose_ico"></span><a class="goods_brand_name" data-url="category.php?id=347&amp;brand=159">麦斯威尔</a></li>
-        <li class="is_no" brand ="M" url_id="160"><span class="choose_ico"></span><a class="goods_brand_name" data-url="category.php?id=347&amp;brand=160">美的</a></li>
-    </ul>
-                        </div>
-                        <div class="enter_yes_no">
-<div class="ct_auto">
-    <span class="yes_bt botton disabled">确定</span>
-    <span class="no_bt botton">关闭</span>
-</div>
+                        <div class="price_auto price_bottom fl">
                         </div>
                     </div>
-                    <div class="s-l-opt sl-ext">
-                        <div class="choose_open s-l-more"><i class="iconfont icon-down"></i></div>
-                        <div class="choose_more s-l-multiple"><i class="iconfont icon-plus"></i>多选</div>
-                    </div>
-                </div>
+                </dl>
             </li>
+
                         
             
-                        <li class="s-line">
+            <li class="s-line">
                 <dl class="s-l-wrap">
                     <div class="s-l-tit filter_attr_name">价格：</div>
                     <div class="s-l-value attr_son">
                         <div class="price_auto fl">
-<div class="price_range"><a href="#">10&nbsp;-&nbsp;90</a></div>
-<div class="price_range"><a href="#">90&nbsp;-&nbsp;170</a></div>
-<div class="price_range"><a href="#">170&nbsp;-&nbsp;250</a></div>
-<div class="price_range"><a href="#">250&nbsp;-&nbsp;330</a></div>
-<div class="price_range"><a href="#">410&nbsp;-&nbsp;490</a></div>
+                             <div class="price_range"><a <?php if(!input('price')) echo 'class="btn sc-redBg-btn"'; ?> href="{:url('index/Category/index',['id'=>input('id'), 'price'=>$price, 'brand'=>$brand, 'filter_attr'=>$filter, 'ob'=>$ob, 'ow'=>$ow],'')}#search">不限</a></div>
+                            {volist name="priceSection" id="price"}
+                                <div class="price_range"><a <?php if(input('price')==$price) echo 'class="btn sc-redBg-btn"'; ?>href="{:url('index/Category/index',['id'=>input('id'),'price'=>$price, 'brand'=>$brand, 'filter_attr'=>$filter, 'ob'=>$ob, 'ow'=>$ow],'')}#search">{$price}</a></div>
+                            {/volist}
                         </div>
                         <div class="price_auto price_bottom fl">
 <input type="text" title="最低价" name="price_min" class="price_class price_min">
@@ -295,6 +221,64 @@ var load_icon = '<img src="__index__/img/load/load.gif" width="200" height="200"
                     </div>
                 </dl>
             </li>
+
+
+
+                <?php 
+                    $attrCount = count($attrRes);
+                    if(!$attrCount){
+                        $attrCount = 1;
+                    }
+                    $filterAttr = input('filter_attr');
+                    if($filterAttr){
+                        $attr_arr = explode('.',$filterAttr);
+                    }else{
+                        $attr_arr = array_fill(0,$attrCount,0);
+                    }
+                    
+                    foreach($attrRes as $k => $v): ?>
+
+
+                <li class="s-line">
+                    <dl class="s-1-wrap">
+                        <div class="s-l-tit filter_attr_name">{$v.attr_name}：</div>
+                        <div class="s-1-value attr_son">
+                            <div class="price_auto f1">
+                                <!-- 交叉筛选 -->
+                                    <?php 
+                                        $tmp_attr_arr = $attr_arr;
+                                        $tmp_attr_arr[$k] = 0;
+                                        $_attr_str = implode('.', $tmp_attr_arr); //把['100G-1','红色-3','i7-5']  转换成字符串，用于发送的参数
+                                        if($attr_arr[$k]){
+                                            $temp = explode('-', $attr_arr[$k]);
+                                            $_filter = $temp[0];
+                                        }else{
+                                            $_filter = '0';
+                                        }
+                                    ?>
+                                 <div class="price_range"><a {if condition="$_filter == '0'"} class="btn sc-redBg-btn" {/if} href="{:url('index/Category/index', ['id'=>$cateId, 'filter_attr'=>$_attr_str, 'brand'=>$brand, 'price'=>$price, 'ob'=>$ob, 'ow'=>$ow], '')}">不限</a></div>
+                                 <?php 
+                                    foreach($v['attr_values'] as $k1 => $v1): 
+                                    $tmp_attr_arr = $attr_arr;
+                                    $tmp_attr_arr[$k] = $v1['attr_value'] .'-'.$v['id'];
+                                    $attr_str = implode('.',$tmp_attr_arr);
+
+
+                                 ?>
+                                    
+                                <div class="price_range"><a {if condition="$v1['attr_value'] == $_filter"} class="btn sc-redBg-btn" {/if} href="{:url('index/Category/index', ['id'=>$cateId, 'filter_attr'=>$attr_str, 'brand'=>$brand, 'price'=>$price, 'ob'=>$ob, 'ow'=>$ow], '')}">{$v1.attr_value}</a></div>
+                                <?php endforeach; ?>
+                            </div>
+                            <div class="price_auto price_bottom fl">
+                            </div>
+                        </div>
+                    </dl>
+                    
+                </li>
+
+
+                <?php endforeach; ?>
+
              
             
              
@@ -306,12 +290,44 @@ var load_icon = '<img src="__index__/img/load/load.gif" width="200" height="200"
             </div>
             <div class="filter">
         <div class="filter-wrap">
+
+
+
     <div class="filter-sort">
         <a href="#" class="">综合<i class="iconfont icon-arrow-up"></i></a>
-        <a href="#" class="">销量<i class="iconfont icon-arrow-up"></i></a>
-        <a href="#" class="">新品<i class="iconfont icon-arrow-up"></i></a>
-        <a href="#" class="">评论数<i class="iconfont icon-arrow-up"></i></a>
-        <a href="#" class="">价格<i class="iconfont icon-arrow-up"></i></a>
+        {if condition="$ob == 'xl' && $ow == 'desc'"}
+            <a href="{:url('index/Category/index',['id'=>$cateId, 'ob'=>'xl', 'ow'=>'asc', 'brand'=>$brand, 'price'=>$price, 'filter_attr'=>$filter], '')}#search" class="curr">销量<i class="iconfont icon-arrow-up"></i></a>
+        {elseif condition="$ob == 'xl' && $ow == 'asc'"} 
+            <a href="{:url('index/Category/index',['id'=>$cateId, 'ob'=>'xl', 'ow'=>'desc', 'brand'=>$brand, 'price'=>$price, 'filter_attr'=>$filter], '')}#search" class="curr">销量<i class="iconfont icon-arrow-down"></i></a>
+        {else /}
+            <a href="{:url('index/Category/index',['id'=>$cateId, 'ob'=>'xl', 'ow'=>'asc', 'brand'=>$brand, 'price'=>$price, 'filter_attr'=>$filter], '')}#search" class="">销量<i class="iconfont icon-arrow-up"></i></a>
+        {/if}
+
+        {if condition="$ob == 'time' && $ow == 'desc'"}
+            <a href="{:url('index/Category/index',['id'=>$cateId, 'ob'=>'time', 'ow'=>'asc', 'brand'=>$brand, 'price'=>$price, 'filter_attr'=>$filter], '')}#search" class="curr">新品<i class="iconfont icon-arrow-up"></i></a>
+        {elseif condition="$ob == 'time' && $ow == 'asc'"} 
+            <a href="{:url('index/Category/index',['id'=>$cateId, 'ob'=>'time', 'ow'=>'desc', 'brand'=>$brand, 'price'=>$price, 'filter_attr'=>$filter], '')}#search" class="curr">新品<i class="iconfont icon-arrow-down"></i></a>
+        {else /}
+            <a href="{:url('index/Category/index',['id'=>$cateId, 'ob'=>'time', 'ow'=>'asc', 'brand'=>$brand, 'price'=>$price, 'filter_attr'=>$filter], '')}#search" class="">新品<i class="iconfont icon-arrow-up"></i></a>
+        {/if}
+
+        {if condition="$ob == 'pl' && $ow == 'desc'"}
+            <a href="{:url('index/Category/index',['id'=>$cateId, 'ob'=>'pl', 'ow'=>'asc', 'brand'=>$brand, 'price'=>$price, 'filter_attr'=>$filter], '')}#search" class="curr">评论数<i class="iconfont icon-arrow-up"></i></a>
+        {elseif condition="$ob == 'pl' && $ow == 'asc'"} 
+            <a href="{:url('index/Category/index',['id'=>$cateId, 'ob'=>'pl', 'ow'=>'desc', 'brand'=>$brand, 'price'=>$price, 'filter_attr'=>$filter], '')}#search" class="curr">评论数<i class="iconfont icon-arrow-down"></i></a>
+        {else /}
+            <a href="{:url('index/Category/index',['id'=>$cateId, 'ob'=>'pl', 'ow'=>'asc', 'brand'=>$brand, 'price'=>$price, 'filter_attr'=>$filter], '')}#search" class="">评论数<i class="iconfont icon-arrow-up"></i></a>
+        {/if}
+
+        {if condition="$ob == 'shop_price' && $ow == 'desc'"}
+            <a href="{:url('index/Category/index',['id'=>$cateId, 'ob'=>'shop_price', 'ow'=>'asc', 'brand'=>$brand, 'price'=>$price, 'filter_attr'=>$filter], '')}#search" class="curr">价格<i class="iconfont icon-arrow-up"></i></a>
+        {elseif condition="$ob == 'shop_price' && $ow == 'asc'"} 
+            <a href="{:url('index/Category/index',['id'=>$cateId, 'ob'=>'shop_price', 'ow'=>'desc', 'brand'=>$brand, 'price'=>$price, 'filter_attr'=>$filter], '')}#search" class="curr">价格<i class="iconfont icon-arrow-down"></i></a>
+        {else /}
+            <a href="{:url('index/Category/index',['id'=>$cateId, 'ob'=>'shop_price', 'ow'=>'asc', 'brand'=>$brand, 'price'=>$price, 'filter_attr'=>$filter], '')}#search" class="">价格<i class="iconfont icon-arrow-up"></i></a>
+        {/if}
+       <!--  <a href="#" class="">评论数<i class="iconfont icon-arrow-up"></i></a>
+        <a href="#" class="">价格<i class="iconfont icon-arrow-up"></i></a> -->
     </div>
     <div class="filter-range">
         <div class="fprice">
@@ -377,1008 +393,66 @@ var load_icon = '<img src="__index__/img/load/load.gif" width="200" height="200"
                 <div class="gl-warp gl-warp-large">
         	            <form name="compareForm" action="compare.php" method="post" onSubmit="return compareGoods(this);" class="goodslistForm" data-state="0">
                         <ul>
-    				                <li class="gl-item">
+                            {volist name="goodsRes" id="goods"}
+    				                
+                                    <li class="gl-item">
                     <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1490174925807.jpg" /></a></div>
+                        <div class="p-img"><a href="#" target="_blank"><img src="__uploads__/{$goods.mid_thumb}" /></a></div>
                     <div class="sider">
 <a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
 <ul>
-            <li  class="curr"><img src="__index__/img/0_thumb_P_1490174925008.jpg" width="26" height="26" /></li>
+            <li  class="curr"><img src="__uploads__/{$goods.sm_thumb}" width="26" height="26" /></li>
+            {if condition="!empty($goods.mid_photo)"}
+                <?php 
+                    $sm=explode(',',$goods['mid_photo']);
+                    foreach($sm as $v):
+                ?>
+                <li  class="curr"> <img src="__uploads__/{$v}"  width="26" height="26"></li>
+                <?php endforeach; ?>
+            {/if}
         </ul>
 <a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
                         </div>
                     <div class="p-lie">
 <div class="p-price">
-            <em>¥</em>158.00    </div>
-<div class="p-num">已售<em>0</em>件</div>
+            <em>¥</em>{$goods.shop_price}    </div>
+<div class="p-num">已售<em>{$goods.xl}</em>件    评论<em>{$goods.pl}</em>条</div>
                         </div>
-                        <div class="p-name"><a href="#" target="_blank">逸阳女裤春装新款韩版休闲裤女九分裤黑色弹力微喇叭裤子显瘦0032 浓郁复古风 修饰腿型 生而优雅</a></div>
-                        <div class="p-store">
-<a href="#" title="童攀课堂" class="store">童攀课堂</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="0" class="p-kefu p-c-violet"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
+                        <div class="p-name"><a href="#" target="_blank">{$goods.goods_name}</a></div>
+                        
                     <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-sr">
-	<i class="i-left"></i>
-    自营    <i class="i-right"></i>
-</span>
+                            <?php 
+                            if($goods['recpos']){
+
+                               $recposArr = explode(',',$goods['recpos']);
+                            
+                                if(in_array(3,$recposArr)){
+                                    echo '<span class="tag tac-mn"><i class="i-left"></i>新品<i class="i-right"></i></span>';
+                                }
+                                if(in_array(2,$recposArr)){
+                                        echo '<span class="tag tac-mh"><i class="i-left"></i>热卖<i class="i-right"></i></span>';
+                                }
+                                if(in_array(4,$recposArr)){
+                                        echo '<span class="tag tac-mb"><i class="i-left"></i>精品<i class="i-right"></i></span>';
+                                }
+                                if(in_array(7,$recposArr)){
+                                        echo '<span class="tag tac-sr"><i class="i-left"></i>自营<i class="i-right"></i></span>';
+                                }
+                            }?>
+
+                        	
+                        	
+                        	
                         </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="801" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 801,'逸阳女裤春装新款韩版休闲裤女九分裤黑色弹力微喇叭裤子显瘦0032 浓郁复古风 修饰腿型 生而优雅','0', '__index__/img/0_thumb_G_1490174925807.jpg', '<em>¥</em>158.00', '<em>¥</em>189.60')">
-    <label class="ui-label" for="801">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(801,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1490174925807.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
+
                         
                 </div>
                 </li>
 				                 
-    				                <li class="gl-item">
-                    <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1490174894779.jpg" /></a></div>
-                    <div class="sider">
-<a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
-<ul>
-            <li  class="curr"><img src="__index__/img/0_thumb_P_1490174894049.jpg" width="26" height="26" /></li>
-        </ul>
-<a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
-                        </div>
-                    <div class="p-lie">
-<div class="p-price">
-            <em>¥</em>166.00    </div>
-<div class="p-num">已售<em>0</em>件</div>
-                        </div>
-                        <div class="p-name"><a href="#" target="_blank">2017韩版女装夏装新款A字宽松松紧腰印花连衣裙DT7039乾 舒适松紧腰 A字版型 时尚印花</a></div>
-                        <div class="p-store">
-<a href="#" title="童攀课堂" class="store">童攀课堂</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="0" class="p-kefu p-c-violet"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
-                    <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-sr">
-	<i class="i-left"></i>
-    自营    <i class="i-right"></i>
-</span>
-                        </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="800" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 800,'2017韩版女装夏装新款A字宽松松紧腰印花连衣裙DT7039乾 舒适松紧腰 A字版型 时尚印花','0', '__index__/img/0_thumb_G_1490174894779.jpg', '<em>¥</em>166.00', '<em>¥</em>199.20')">
-    <label class="ui-label" for="800">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(800,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1490174894779.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
-                        
-                </div>
-                </li>
+    				{/volist}                 
 				                 
-    				                <li class="gl-item">
-                    <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1490174858999.jpg" /></a></div>
-                    <div class="sider">
-<a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
-<ul>
-            <li  class="curr"><img src="__index__/img/0_thumb_P_1490174858959.jpg" width="26" height="26" /></li>
-        </ul>
-<a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
-                        </div>
-                    <div class="p-lie">
-<div class="p-price">
-            <em>¥</em>68.00    </div>
-<div class="p-num">已售<em>0</em>件</div>
-                        </div>
-                        <div class="p-name"><a href="#" target="_blank">韩美格2017春秋新款修身大码蕾丝网纱打底衫女长袖薄款圆领女T恤 全店商品 二件减5元 三件减10</a></div>
-                        <div class="p-store">
-<a href="#" title="童攀课堂" class="store">童攀课堂</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="0" class="p-kefu p-c-violet"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
-                    <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-sr">
-	<i class="i-left"></i>
-    自营    <i class="i-right"></i>
-</span>
-                        </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="799" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 799,'韩美格2017春秋新款修身大码蕾丝网纱打底衫女长袖薄款圆领女T恤 全店商品 二件减5元 三件减10','0', '__index__/img/0_thumb_G_1490174858999.jpg', '<em>¥</em>68.00', '<em>¥</em>81.60')">
-    <label class="ui-label" for="799">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(799,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1490174858999.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
-                        
-                </div>
-                </li>
-				                 
-    				                <li class="gl-item">
-                    <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1490174824075.jpg" /></a></div>
-                    <div class="sider">
-<a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
-<ul>
-            <li  class="curr"><img src="__index__/img/0_thumb_P_1490174824415.jpg" width="26" height="26" /></li>
-        </ul>
-<a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
-                        </div>
-                    <div class="p-lie">
-<div class="p-price">
-            <em>¥</em>149.00    </div>
-<div class="p-num">已售<em>0</em>件</div>
-                        </div>
-                        <div class="p-name"><a href="#" target="_blank">逸阳女裤2017夏修身白色牛仔裤超短裤三分裤mm热裤女夏宽松大码潮</a></div>
-                        <div class="p-store">
-<a href="#" title="童攀课堂" class="store">童攀课堂</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="0" class="p-kefu p-c-violet"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
-                    <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-sr">
-	<i class="i-left"></i>
-    自营    <i class="i-right"></i>
-</span>
-                        </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="798" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 798,'逸阳女裤2017夏修身白色牛仔裤超短裤三分裤mm热裤女夏宽松大码潮','0', '__index__/img/0_thumb_G_1490174824075.jpg', '<em>¥</em>149.00', '<em>¥</em>178.79')">
-    <label class="ui-label" for="798">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(798,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1490174824075.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
-                        
-                </div>
-                </li>
-				                 
-    				                <li class="gl-item">
-                    <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1490174791219.jpg" /></a></div>
-                    <div class="sider">
-<a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
-<ul>
-            <li  class="curr"><img src="__index__/img/0_thumb_P_1490174791247.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1490174794253.jpg" width="26" height="26" /></li>
-        </ul>
-<a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
-                        </div>
-                    <div class="p-lie">
-<div class="p-price">
-            <em>¥</em>49.00    </div>
-<div class="p-num">已售<em>0</em>件</div>
-                        </div>
-                        <div class="p-name"><a href="#" target="_blank">17年春夏新款百搭半身裙蛋糕裙 a字裙 裤裙伞裙大码裙子超短裙女 松紧腰围 带裤边打底衬 涤针织面料</a></div>
-                        <div class="p-store">
-<a href="#" title="童攀课堂" class="store">童攀课堂</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="0" class="p-kefu p-c-violet"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
-                    <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-sr">
-	<i class="i-left"></i>
-    自营    <i class="i-right"></i>
-</span>
-                        </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="797" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 797,'17年春夏新款百搭半身裙蛋糕裙 a字裙 裤裙伞裙大码裙子超短裙女 松紧腰围 带裤边打底衬 涤针织面料','0', '__index__/img/0_thumb_G_1490174791219.jpg', '<em>¥</em>49.00', '<em>¥</em>58.80')">
-    <label class="ui-label" for="797">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(797,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1490174791219.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
-                        
-                </div>
-                </li>
-				                 
-    				                <li class="gl-item">
-                    <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1490174741051.jpg" /></a></div>
-                    <div class="sider">
-<a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
-<ul>
-            <li  class="curr"><img src="__index__/img/0_thumb_P_1490174741400.jpg" width="26" height="26" /></li>
-        </ul>
-<a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
-                        </div>
-                    <div class="p-lie">
-<div class="p-price">
-            <em>¥</em>40.00    </div>
-<div class="p-num">已售<em>0</em>件</div>
-                        </div>
-                        <div class="p-name"><a href="#" target="_blank">初棉纯色圆领长袖T恤打底衫秋衣女上衣体恤女士修身打底衣春秋 挺拔有型 棉氨材质 柔软舒适 耐洗耐磨</a></div>
-                        <div class="p-store">
-<a href="#" title="童攀课堂" class="store">童攀课堂</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="0" class="p-kefu p-c-violet"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
-                    <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-sr">
-	<i class="i-left"></i>
-    自营    <i class="i-right"></i>
-</span>
-                        </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="796" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 796,'初棉纯色圆领长袖T恤打底衫秋衣女上衣体恤女士修身打底衣春秋 挺拔有型 棉氨材质 柔软舒适 耐洗耐磨','0', '__index__/img/0_thumb_G_1490174741051.jpg', '<em>¥</em>65.00', '<em>¥</em>78.00')">
-    <label class="ui-label" for="796">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(796,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1490174741051.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
-                        
-                </div>
-                </li>
-				                 
-    				                <li class="gl-item">
-                    <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1490169281436.jpg" /></a></div>
-                    <div class="sider">
-<a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
-<ul>
-            <li  class="curr"><img src="__index__/img/_thumb_P_1490169285844.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1490169285863.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/0_thumb_P_1490169281822.jpg" width="26" height="26" /></li>
-        </ul>
-<a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
-                        </div>
-                    <div class="p-lie">
-<div class="p-price">
-            <em>¥</em>78.00    </div>
-<div class="p-num">已售<em>0</em>件</div>
-                        </div>
-                        <div class="p-name"><a href="#" target="_blank">韩都衣舍2017韩版女装春装新款条纹显瘦百搭宽松v领七分袖衬衫潮 领券立减/单件包邮/七天无理由退换</a></div>
-                        <div class="p-store">
-<a href="#" title="韩都衣舍" class="store" target="_blank">韩都衣舍</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="6" class="p-kefu"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
-                    <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="775" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 775,'韩都衣舍2017韩版女装春装新款条纹显瘦百搭宽松v领七分袖衬衫潮 领券立减/单件包邮/七天无理由退换','0', '__index__/img/0_thumb_G_1490169281436.jpg', '<em>¥</em>78.00', '<em>¥</em>93.60')">
-    <label class="ui-label" for="775">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(775,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1490169281436.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
-                        
-                </div>
-                </li>
-				                 
-    				                <li class="gl-item">
-                    <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1490169250846.jpg" /></a></div>
-                    <div class="sider">
-<a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
-<ul>
-            <li  class="curr"><img src="__index__/img/_thumb_P_1490169255374.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1490169255340.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/0_thumb_P_1490169250295.jpg" width="26" height="26" /></li>
-        </ul>
-<a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
-                        </div>
-                    <div class="p-lie">
-<div class="p-price">
-            <em>¥</em>159.00    </div>
-<div class="p-num">已售<em>0</em>件</div>
-                        </div>
-                        <div class="p-name"><a href="#" target="_blank">韩都衣舍秋冬喇叭长袖针织衫毛衣女套头宽松纯色百搭学生韩版打底 领券下单立减/单件包邮/先拍先发货！</a></div>
-                        <div class="p-store">
-<a href="#" title="韩都衣舍" class="store" target="_blank">韩都衣舍</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="6" class="p-kefu"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
-                    <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="774" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 774,'韩都衣舍秋冬喇叭长袖针织衫毛衣女套头宽松纯色百搭学生韩版打底 领券下单立减/单件包邮/先拍先发货！','0', '__index__/img/0_thumb_G_1490169250846.jpg', '<em>¥</em>159.00', '<em>¥</em>190.79')">
-    <label class="ui-label" for="774">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(774,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1490169250846.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
-                        
-                </div>
-                </li>
-				                 
-    				                <li class="gl-item">
-                    <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1490169216444.jpg" /></a></div>
-                    <div class="sider">
-<a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
-<ul>
-            <li  class="curr"><img src="__index__/img/_thumb_P_1490169221093.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1490169221057.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/0_thumb_P_1490169216735.jpg" width="26" height="26" /></li>
-        </ul>
-<a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
-                        </div>
-                    <div class="p-lie">
-<div class="p-price">
-            <em>¥</em>159.00    </div>
-<div class="p-num">已售<em>0</em>件</div>
-                        </div>
-                        <div class="p-name"><a href="#" target="_blank">韩都衣舍2016新款秋冬款长袖连衣裙宽松学生冬季内搭打底裙子韩版 领券下单立减/单件包邮/先拍先发货！</a></div>
-                        <div class="p-store">
-<a href="#" title="韩都衣舍" class="store" target="_blank">韩都衣舍</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="6" class="p-kefu"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
-                    <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="773" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 773,'韩都衣舍2016新款秋冬款长袖连衣裙宽松学生冬季内搭打底裙子韩版 领券下单立减/单件包邮/先拍先发货！','0', '__index__/img/0_thumb_G_1490169216444.jpg', '<em>¥</em>159.00', '<em>¥</em>190.79')">
-    <label class="ui-label" for="773">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(773,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1490169216444.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
-                        
-                </div>
-                </li>
-				                 
-    				                <li class="gl-item">
-                    <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1490169186175.jpg" /></a></div>
-                    <div class="sider">
-<a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
-<ul>
-            <li  class="curr"><img src="__index__/img/_thumb_P_1490169190760.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1490169190653.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/0_thumb_P_1490169186098.jpg" width="26" height="26" /></li>
-        </ul>
-<a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
-                        </div>
-                    <div class="p-lie">
-<div class="p-price">
-            <em>¥</em>118.00    </div>
-<div class="p-num">已售<em>0</em>件</div>
-                        </div>
-                        <div class="p-name"><a href="#" target="_blank">韩都衣舍2017春装新款女装春款拼接喇叭长袖连衣裙中长款时尚韩版 领券立减/单件包邮/七天无理由退换</a></div>
-                        <div class="p-store">
-<a href="#" title="韩都衣舍" class="store" target="_blank">韩都衣舍</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="6" class="p-kefu"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
-                    <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="772" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 772,'韩都衣舍2017春装新款女装春款拼接喇叭长袖连衣裙中长款时尚韩版 领券立减/单件包邮/七天无理由退换','0', '__index__/img/0_thumb_G_1490169186175.jpg', '<em>¥</em>118.00', '<em>¥</em>141.60')">
-    <label class="ui-label" for="772">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(772,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1490169186175.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
-                        
-                </div>
-                </li>
-				                 
-    				                <li class="gl-item">
-                    <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1490169151126.jpg" /></a></div>
-                    <div class="sider">
-<a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
-<ul>
-            <li  class="curr"><img src="__index__/img/_thumb_P_1490169157142.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1490169158322.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1490169158351.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/0_thumb_P_1490169151557.jpg" width="26" height="26" /></li>
-        </ul>
-<a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
-                        </div>
-                    <div class="p-lie">
-<div class="p-price">
-            <em>¥</em>148.00    </div>
-<div class="p-num">已售<em>0</em>件</div>
-                        </div>
-                        <div class="p-name"><a href="#" target="_blank">韩都衣舍春季韩国ulzzang连帽卫衣女套头宽松百搭学生韩版潮bf风 领券下单立减/单件包邮/先拍先发货！</a></div>
-                        <div class="p-store">
-<a href="#" title="韩都衣舍" class="store" target="_blank">韩都衣舍</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="6" class="p-kefu"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
-                    <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="771" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 771,'韩都衣舍春季韩国ulzzang连帽卫衣女套头宽松百搭学生韩版潮bf风 领券下单立减/单件包邮/先拍先发货！','0', '__index__/img/0_thumb_G_1490169151126.jpg', '<em>¥</em>148.00', '<em>¥</em>177.60')">
-    <label class="ui-label" for="771">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(771,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1490169151126.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
-                        
-                </div>
-                </li>
-				                 
-    				                <li class="gl-item">
-                    <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1490169118213.jpg" /></a></div>
-                    <div class="sider">
-<a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
-<ul>
-            <li  class="curr"><img src="__index__/img/_thumb_P_1490169123927.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1490169123565.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/0_thumb_P_1490169111600.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/0_thumb_P_1490169118199.jpg" width="26" height="26" /></li>
-        </ul>
-<a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
-                        </div>
-                    <div class="p-lie">
-<div class="p-price">
-            <em>¥</em>15.90    </div>
-<div class="p-num">已售<em>0</em>件</div>
-                        </div>
-                        <div class="p-name"><a href="#" target="_blank">小米红米3s手机壳保护套红米3高配版指纹男女款潮版磨砂硬壳防摔 收藏截图 送大礼包</a></div>
-                        <div class="p-store">
-<a href="#" title="韩都衣舍" class="store" target="_blank">韩都衣舍</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="6" class="p-kefu"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
-                    <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="770" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 770,'小米红米3s手机壳保护套红米3高配版指纹男女款潮版磨砂硬壳防摔 收藏截图 送大礼包','0', '__index__/img/0_thumb_G_1490169118213.jpg', '<em>¥</em>15.90', '<em>¥</em>19.08')">
-    <label class="ui-label" for="770">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(770,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1490169118213.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
-                        
-                </div>
-                </li>
-				                 
-    				                <li class="gl-item">
-                    <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1490169074773.jpg" /></a></div>
-                    <div class="sider">
-<a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
-<ul>
-            <li  class="curr"><img src="__index__/img/_thumb_P_1490169077239.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1490169077389.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/0_thumb_P_1490169074855.jpg" width="26" height="26" /></li>
-        </ul>
-<a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
-                        </div>
-                    <div class="p-lie">
-<div class="p-price">
-            <em>¥</em>259.00    </div>
-<div class="p-num">已售<em>0</em>件</div>
-                        </div>
-                        <div class="p-name"><a href="#" target="_blank">朴信惠明显同款韩都衣舍2017春装新款高领毛衣女套头宽松纯色韩版 领券下单立减/单件包邮/先拍先发货！</a></div>
-                        <div class="p-store">
-<a href="#" title="韩都衣舍" class="store" target="_blank">韩都衣舍</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="6" class="p-kefu"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
-                    <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="769" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 769,'朴信惠明显同款韩都衣舍2017春装新款高领毛衣女套头宽松纯色韩版 领券下单立减/单件包邮/先拍先发货！','0', '__index__/img/0_thumb_G_1490169074773.jpg', '<em>¥</em>259.00', '<em>¥</em>310.80')">
-    <label class="ui-label" for="769">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(769,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1490169074773.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
-                        
-                </div>
-                </li>
-				                 
-    				                <li class="gl-item">
-                    <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1490169030833.jpg" /></a></div>
-                    <div class="sider">
-<a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
-<ul>
-            <li  class="curr"><img src="__index__/img/_thumb_P_1490169039971.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1490169039705.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/0_thumb_P_1490169030177.jpg" width="26" height="26" /></li>
-        </ul>
-<a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
-                        </div>
-                    <div class="p-lie">
-<div class="p-price">
-            <em>¥</em>88.00    </div>
-<div class="p-num">已售<em>0</em>件</div>
-                        </div>
-                        <div class="p-name"><a href="#" target="_blank">韩都衣舍2017韩版女装夏装新款时尚修身显瘦圆领条纹T恤OGY7711娋 显瘦版型 舒适面料 条纹元素</a></div>
-                        <div class="p-store">
-<a href="#" title="韩都衣舍" class="store" target="_blank">韩都衣舍</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="6" class="p-kefu"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
-                    <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="768" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 768,'韩都衣舍2017韩版女装夏装新款时尚修身显瘦圆领条纹T恤OGY7711娋 显瘦版型 舒适面料 条纹元素','0', '__index__/img/0_thumb_G_1490169030833.jpg', '<em>¥</em>88.00', '<em>¥</em>105.60')">
-    <label class="ui-label" for="768">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(768,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1490169030833.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
-                        
-                </div>
-                </li>
-				                 
-    				                <li class="gl-item">
-                    <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1490168991044.jpg" /></a></div>
-                    <div class="sider">
-<a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
-<ul>
-            <li  class="curr"><img src="__index__/img/_thumb_P_1490168995911.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1490168995071.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/0_thumb_P_1490168991357.jpg" width="26" height="26" /></li>
-        </ul>
-<a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
-                        </div>
-                    <div class="p-lie">
-<div class="p-price">
-            <em>¥</em>112.00    </div>
-<div class="p-num">已售<em>0</em>件</div>
-                        </div>
-                        <div class="p-name"><a href="#" target="_blank">韩都衣舍2017韩版女装夏装新款纯色镂空露腰短袖T恤OU7163堯 韩版版型 时尚镂空 舒适面料 个性穿搭</a></div>
-                        <div class="p-store">
-<a href="#" title="韩都衣舍" class="store" target="_blank">韩都衣舍</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="6" class="p-kefu"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
-                    <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="767" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 767,'韩都衣舍2017韩版女装夏装新款纯色镂空露腰短袖T恤OU7163堯 韩版版型 时尚镂空 舒适面料 个性穿搭','0', '__index__/img/0_thumb_G_1490168991044.jpg', '<em>¥</em>112.00', '<em>¥</em>134.40')">
-    <label class="ui-label" for="767">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(767,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1490168991044.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
-                        
-                </div>
-                </li>
-				                 
-    				                <li class="gl-item">
-                    <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1489102950633.jpg" /></a></div>
-                    <div class="sider">
-<a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
-<ul>
-            <li  class="curr"><img src="__index__/img/0_thumb_P_1489102950134.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1489102960258.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1489102960697.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1489102960787.jpg" width="26" height="26" /></li>
-</ul>
-<a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
-                        </div>
-                    <div class="p-lie">
-<div class="p-price">
-            <em>¥</em>450.00    </div>
-<div class="p-num">已售<em>1</em>件</div>
-                        </div>
-                        <div class="p-name"><a href="#" target="_blank">韩都衣舍2017韩版女装新款黑白拼接插肩棒球服春季短外套HH5597妠 朴信惠同款 黑白拼接 插肩袖 棒球服</a></div>
-                        <div class="p-store">
-<a href="#" title="童攀课堂" class="store">童攀课堂</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="0" class="p-kefu p-c-violet"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
-                    <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-sr">
-	<i class="i-left"></i>
-    自营    <i class="i-right"></i>
-</span>
-                        </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="635" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 635,'韩都衣舍2017韩版女装新款黑白拼接插肩棒球服春季短外套HH5597妠 朴信惠同款 黑白拼接 插肩袖 棒球服','0', '__index__/img/0_thumb_G_1489102950633.jpg', '<em>¥</em>450.00', '<em>¥</em>540.00')">
-    <label class="ui-label" for="635">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(635,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1489102950633.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
-                        
-                </div>
-                </li>
-				                 
-    				                <li class="gl-item">
-                    <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1489102753231.jpg" /></a></div>
-                    <div class="sider">
-<a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
-<ul>
-            <li  class="curr"><img src="__index__/img/0_thumb_P_1489102753387.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1489102766368.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1489102767107.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1489102767718.jpg" width="26" height="26" /></li>
-        </ul>
-<a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
-                        </div>
-                    <div class="p-lie">
-<div class="p-price">
-            <em>¥</em>300.00    </div>
-<div class="p-num">已售<em>2</em>件</div>
-                        </div>
-                        <div class="p-name"><a href="#" target="_blank">新款韩版chic学生宽松短款外套上衣字母长袖连帽套头卫衣女潮</a></div>
-                        <div class="p-store">
-<a href="#" title="童攀课堂" class="store">童攀课堂</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="0" class="p-kefu p-c-violet"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
-                    <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-sr">
-	<i class="i-left"></i>
-    自营    <i class="i-right"></i>
-</span>
-                        </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="634" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 634,'新款韩版chic学生宽松短款外套上衣字母长袖连帽套头卫衣女潮','0', '__index__/img/0_thumb_G_1489102753231.jpg', '<em>¥</em>300.00', '<em>¥</em>360.00')">
-    <label class="ui-label" for="634">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(634,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1489102753231.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
-                        
-                </div>
-                </li>
-				                 
-    				                <li class="gl-item">
-                    <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1489102299856.jpg" /></a></div>
-                    <div class="sider">
-<a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
-<ul>
-            <li  class="curr"><img src="__index__/img/0_thumb_P_1489102299193.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1489102305334.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1489102305350.jpg" width="26" height="26" /></li>
-        </ul>
-<a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
-                        </div>
-                    <div class="p-lie">
-<div class="p-price">
-            <em>¥</em>233.00    </div>
-<div class="p-num">已售<em>0</em>件</div>
-                        </div>
-                        <div class="p-name"><a href="#" target="_blank">新款学院风韩版时尚太空棉宽松长袖印花圆领卫衣女</a></div>
-                        <div class="p-store">
-<a href="#" title="童攀课堂" class="store">童攀课堂</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="0" class="p-kefu p-c-violet"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
-                    <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-sr">
-	<i class="i-left"></i>
-    自营    <i class="i-right"></i>
-</span>
-                        </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="633" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 633,'新款学院风韩版时尚太空棉宽松长袖印花圆领卫衣女','0', '__index__/img/0_thumb_G_1489102299856.jpg', '<em>¥</em>233.00', '<em>¥</em>279.59')">
-    <label class="ui-label" for="633">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(633,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1489102299856.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
-                        
-                </div>
-                </li>
-				                 
-    				                <li class="gl-item">
-                    <div class="gl-i-wrap">
-                        <div class="p-img"><a href="#" target="_blank"><img src="__index__/img/0_thumb_G_1489100550574.jpg" /></a></div>
-                    <div class="sider">
-<a href="#" class="sider-prev"><i class="iconfont icon-left"></i></a>
-<ul>
-            <li  class="curr"><img src="__index__/img/0_thumb_P_1489100550173.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1489100561245.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1489100561054.jpg" width="26" height="26" /></li>
-<li ><img src="__index__/img/_thumb_P_1489100561298.jpg" width="26" height="26" /></li>
-        </ul>
-<a href="#" class="sider-next"><i class="iconfont icon-right"></i></a>
-                        </div>
-                    <div class="p-lie">
-<div class="p-price">
-            <em>¥</em>258.00    </div>
-<div class="p-num">已售<em>0</em>件</div>
-                        </div>
-                        <div class="p-name"><a href="#" target="_blank">法国DK正品文胸套装女内衣性感蕾丝聚拢深V调整型小胸品牌收副乳 法国正品 蕾丝性感 原装包装 送女神必备</a></div>
-                        <div class="p-store">
-<a href="#" title="童攀课堂" class="store">童攀课堂</a>
-
-<a href="#" id="IM" onclick="openWin(this)" ru_id="0" class="p-kefu p-c-violet"><i class="iconfont icon-kefu"></i></a>
-
-                        </div>
-                    <div class="p-activity">
-                        	                        	<span class="tag tac-mn">
-	<i class="i-left"></i>
-    新品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mh">
-	<i class="i-left"></i>
-    热卖    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-mb">
-	<i class="i-left"></i>
-    精品    <i class="i-right"></i>
-</span>
-                        	<span class="tag tac-sr">
-	<i class="i-left"></i>
-    自营    <i class="i-right"></i>
-</span>
-                        </div>
-                    <div class="p-operate">
-<a href="#" id="compareLink">
-    <input id="630" type="checkbox" name="duibi" class="ui-checkbox" onClick="Compare.add(this, 630,'法国DK正品文胸套装女内衣性感蕾丝聚拢深V调整型小胸品牌收副乳 法国正品 蕾丝性感 原装包装 送女神必备','0', '__index__/img/0_thumb_G_1489100550574.jpg', '<em>¥</em>258.00', '<em>¥</em>309.59')">
-    <label class="ui-label" for="630">对比</label>
-</a>
-<a href="#" class="choose-btn-coll"><i class="iconfont icon-zan-alt"></i>收藏</a>
-        <a href="#" onClick="javascript:addToCart(630,0,event,this,'flyItem');" rev="__index__/img/0_thumb_G_1489100550574.jpg" data-dialog="addCart_dialog" data-divid="addCartLog" data-title="请选择属性" class="addcart">
-        <i class="iconfont icon-carts"></i>加入购物车    </a>
-</div>
-                        
-                </div>
-                </li>
+				              
+				         
 				                 
      
                  
@@ -1483,7 +557,6 @@ var load_icon = '<img src="__index__/img/load/load.gif" width="200" height="200"
                         </div>
                         <div class="col col-2">
 <div class="p-store">
-<a href="#" title="童攀课堂" class="store">童攀课堂</a>
 
 <a href="#" id="IM" onclick="openWin(this)" ru_id="0" class="p-kefu"><i class="iconfont icon-kefu"></i></a>
 
@@ -1523,7 +596,6 @@ var load_icon = '<img src="__index__/img/load/load.gif" width="200" height="200"
                         </div>
                         <div class="col col-2">
 <div class="p-store">
-<a href="#" title="童攀课堂" class="store">童攀课堂</a>
 
 <a href="#" id="IM" onclick="openWin(this)" ru_id="0" class="p-kefu"><i class="iconfont icon-kefu"></i></a>
 

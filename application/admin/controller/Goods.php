@@ -23,6 +23,7 @@ class Goods extends Controller
     {
     	if(request()->isPost()){
     		$data=input('post.');
+            $data['time']=time();
             // dump($data); die;
     		//验证
             // dump($_FILES);die;

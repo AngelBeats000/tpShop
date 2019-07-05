@@ -48,9 +48,11 @@ class Category extends Controller
         $categoryRecposRes=db('recpos')->where('rec_type','=',2)->select(); 
         $CategoryRes=$CategoryObj->order('sort DESC')->select();
         $CategoryRes=$Category->Catetree($CategoryRes);
+        $typeRes = db('type')->select();  //属性筛选
         $this->assign([
             'CategoryRes'=>$CategoryRes,
             'categoryRecposRes'=>$categoryRecposRes,
+            'typeRes'=>$typeRes
             ]);
         return view();
     }
@@ -97,11 +99,17 @@ class Category extends Controller
         $Categorys=$CategoryObj->find(input('id'));
     	$CategoryRes=$CategoryObj->order('sort DESC')->select();
         $CategoryRes=$Category->Catetree($CategoryRes);
+
+        // 获取商品筛选属性
+        $typeRes=db('type')->select(); //获取属性名称
+        $searchAttrArr = model('Category')->searchAttrArr($Categorys);
         $this->assign([
             'CategoryRes'=>$CategoryRes,
             'Categorys'=>$Categorys,
             'categoryRecposRes'=>$categoryRecposRes,
             'myCategoryRecposRes'=>$myCategoryRecposRes,
+            'typeRes'=>$typeRes,
+            'searchAttrArr'=>$searchAttrArr
             ]);
         return view();
     }

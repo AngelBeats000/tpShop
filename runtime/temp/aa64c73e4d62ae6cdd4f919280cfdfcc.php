@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:80:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/index\view\flow\flow4.htm";i:1560938943;s:83:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/index\view\common\footer.htm";i:1559549771;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:80:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/index\view\flow\flow4.htm";i:1561031249;s:83:"D:\phpstudy\PHPTutorial\WWW\shop\public/../application/index\view\common\footer.htm";i:1559549771;}*/ ?>
 
 <!doctype html>
 <html>
@@ -137,7 +137,12 @@ var load_icon = '<img src="__index__/img/load.gif" width="200" height="200" />';
                             <span id="mobile"><?php echo $ordRes['phone']; ?></span>
                         </div>
                     </div>
-                    <img src="<?php echo url('index/Flow/wxewm',['outTradeNo'=>$ordRes['out_trade_no']],''); ?>">
+                    
+                        <?php if($ordRes['pay_status'] == 0): ?>
+                            <img id="ewm" src="<?php echo url('index/Flow/wxewm',['outTradeNo'=>$ordRes['out_trade_no']],''); ?>">
+                        <?php else: ?>
+                            <img id="ewm" width="100" src="__index__/img/wxewm.png">
+                        <?php endif; ?>
     <a href="flow.php?step=pdf&order=17" target="_blank" class="orderPrint ftx-05">保存订单并打印</a>&nbsp;&nbsp;
                     <a href="index.php" target="_blank" class="orderPrint ftx-05">继续购物</a>
                 </div>
@@ -362,71 +367,95 @@ var load_icon = '<img src="__index__/img/load.gif" width="200" height="200" />';
     <script type="text/javascript" src="themes/ecmoban_dsc2017/js/region.js"></script>
     
 	    <script type="text/javascript">
-    	$(function(){
-			$(".p-mode-list .p-mode-item").click(function(){
-				var onlinepay_type = $(this).attr('flag');
-				var order_sn = $(this).attr('order_sn');
-				$.ajax({
-					async: false,
-					url:"flow.php?act=onlinepay_edit&onlinepay_type="+onlinepay_type+"&order_sn="+order_sn,
-				});
-			});
-			
-			
-			$(".p-mode-item input").click(function(){
-				var content = $("#pay_Dialog").html();
-				pb({
-					id:"payDialog",
-					title:json_languages.payTitle,
-					width:550,
-					height:300,
-					content:content,
-					drag:false,
-					foot:false
-				});
-			});
-			
-			//微信支付定时查询订单状态 by wanglu
-    		checkOrder();
+        $(function(){
+            
+            //Ajax定时访问服务端，2秒一次
+            // window.setInterval('my_monitor()',2000);
 
-			//微信扫码
-			$("[data-type='wxpay']").on("click",function(){
-				var content = $("#wxpay_dialog").html();
-				pb({
-					id: "scanCode",
-					title: "",
-					width: 716,
-					content: content,
-					drag: true,
-					foot: false,
-					cl_cBtn: false,
-					cBtn: false
-				});
-			});
-		});
-		
-		var timer;
-		function checkOrder(){
-			var pay_name = "在线支付";
-			var pay_status = "0";
-			var url = "flow.php?step=checkorder&order_id=17";
-			if(pay_name == json_languages.payment_is_online && pay_status == 0){
-				$.get(url, {}, function(data){
-					//已付款
-					if(data.code > 0 && data.pay_code == 'wxpay'){
-						clearTimeout(timer);
-						location.href = "respond.php?code=" + data.pay_code + "&status=1";
-					}
-				},'json');
-			}
-			timer = setTimeout("checkOrder()", 5000);
-		}
+
+
+            $(".p-mode-list .p-mode-item").click(function(){
+                var onlinepay_type = $(this).attr('flag');
+                var order_sn = $(this).attr('order_sn');
+                $.ajax({
+                    async: false,
+                    url:"flow.php?act=onlinepay_edit&onlinepay_type="+onlinepay_type+"&order_sn="+order_sn,
+                });
+            });
+            
+            
+            $(".p-mode-item input").click(function(){
+                var content = $("#pay_Dialog").html();
+                pb({
+                    id:"payDialog",
+                    title:json_languages.payTitle,
+                    width:550,
+                    height:300,
+                    content:content,
+                    drag:false,
+                    foot:false
+                });
+            });
+            
+            //微信支付定时查询订单状态 by wanglu
+            checkOrder();
+
+            //微信扫码
+            $("[data-type='wxpay']").on("click",function(){
+                var content = $("#wxpay_dialog").html();
+                pb({
+                    id: "scanCode",
+                    title: "",
+                    width: 716,
+                    content: content,
+                    drag: true,
+                    foot: false,
+                    cl_cBtn: false,
+                    cBtn: false
+                });
+            });
+        });
+        
+        var interval = setInterval(function(){my_monitor();}, 2000);
+        //微信支付状态
+         function my_monitor(){
+            var out_trade_no = <?php echo $ordRes['out_trade_no']; ?>;
+            $.ajax({
+               type:"POST",
+               url:"<?php echo url('index/Flow/getPayStatus'); ?>",
+               data:{out_trade_no:out_trade_no},
+               dataType:'json',
+               success:function(res) {
+                   if(res.pay_status == 1){
+                        $("#ewm").attr('src','http://127.0.0.1/shop/public/static/index/img/wxpay.png');
+                        window.clearInterval(interval); //清楚定时器
+                   }
+               }
+           })
+        }
+
+        var timer;
+        function checkOrder(){
+            var pay_name = "在线支付";
+            var pay_status = "0";
+            var url = "flow.php?step=checkorder&order_id=17";
+            if(pay_name == json_languages.payment_is_online && pay_status == 0){
+                $.get(url, {}, function(data){
+                    //已付款
+                    if(data.code > 0 && data.pay_code == 'wxpay'){
+                        clearTimeout(timer);
+                        location.href = "respond.php?code=" + data.pay_code + "&status=1";
+                    }
+                },'json');
+            }
+            // timer = setTimeout("checkOrder()", 5000);
+        }
     </script>
-	
+    
     <script type="text/javascript">
         $(function(){
-			$("input[name='store_order']").val(0);
-			
+            $("input[name='store_order']").val(0);
+            
             $(document).on('click', "[ectype='store_order']", function(){
                 var i = 0;
                 $("*[ectype='ckShopAll']").each(function(){

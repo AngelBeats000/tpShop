@@ -42,7 +42,6 @@ class Notify extends Base
             $orderTotalPrice = $orderTotalPrice*100;
 
             if($arr['total_fee'] == $orderTotalPrice){//生产环境需要根据订单号在数据库中查询金额
-                url('index/Flow/flow5');
                 return true;
             }else{
                 $this->logs('log.txt', '订单金额不匹配!微信支付系统提交过来的金额为' . $arr['total_fee']);

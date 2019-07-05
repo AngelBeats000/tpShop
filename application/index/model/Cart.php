@@ -4,7 +4,7 @@
  * @Author: Huang LongPan
  * @Date:   2019-06-08 22:24:30
  * @Last Modified by:   Huang LongPan
- * @Last Modified time: 2019-06-17 19:25:01
+ * @Last Modified time: 2019-06-21 09:49:17
  */
 namespace app\index\model;
 use think\Model;
@@ -138,7 +138,7 @@ class Cart extends Model
 				$goodsAttrRes=Db::name('goods_attr')->alias('ga')->join('attr a','ga.attr_id = a.id')->field('attr_value,attr_name,attr_price')->where('ga.id','in',$arr[1])->select();
 				foreach ($goodsAttrRes as $k1 => $v1) {
 					$_cart[$k]['shop_price'] += $v1['attr_price'];     //属性价格累计到商品价格
-					$goodsStr[]=$v1['attr_name'].':'.$v1['attr_value'];
+					$goodsStr[]=$v1['attr_name'].':'.$v1['attr_value'].'[￥'.$v1['attr_price'].']';
 				}
 				$_cart[$k]['goodsStr']=implode('<br>',$goodsStr);
 			}else{

@@ -4,7 +4,7 @@
  * @Author: Huang LongPan
  * @Date:   2019-05-28 19:58:19
  * @Last Modified by:   Huang LongPan
- * @Last Modified time: 2019-05-29 19:24:59
+ * @Last Modified time: 2019-06-22 21:54:51
  */
 namespace app\admin\controller;
 use think\Controller;
@@ -24,7 +24,7 @@ class CategoryAd extends Controller
     	if(request()->isPost()){
     		$data=input('post.');
             if($data['position']=='B' || $data['position']=='C'){
-                $cas=db('CategoryAd')->where(['category_id'=>$data['category_id'],'position'=$data['position']])->select();
+                $cas=db('CategoryAd')->where(['category_id'=>$data['category_id'],'position'=>$data['position'] ])->select();
                 if($cas){   
                     $this->error('该位置已经有推荐，请先删除原位置');
                 }
@@ -68,7 +68,7 @@ class CategoryAd extends Controller
             $data=input('post.');
 
             if($data['position']=='B' || $data['position']=='C'){
-                $cas=db('CategoryAd')->where(['category_id'=>$data['category_id'],'position'=$data['position']])->select();
+                $cas=db('CategoryAd')->where(['category_id'=>$data['category_id'],'position'=>$data['position']])->select();
                 if($cas){   
                     $this->error('该位置已经有推荐，请先删除原位置');
                 }

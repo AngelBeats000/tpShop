@@ -1,10 +1,35 @@
 <?php
 namespace app\index\controller;
-
+use think\Db;
 class Category extends Base 
 {
     public function index($id)
     {
+        // 筛选属性
+    	$attrRes=model('Category')->SearchAttrIds2($id);
+
+        // 价格区间
+        $priceSection=model('Category')->price($id);
+
+        // 获取品牌信息
+        $brandRes = model('Category')->brand($id);
+
+        // 获取商品
+        $goodsRes= model('Category')->search_goods($id);
+        dump($goodsRes);
+        // dump($priceSection);die;
+    	// dump($attrRes);die;
+        $ob = input('ob') ? input('ob') : 'xl'; 
+        $ow = input('ow') ? input('ow') : 'desc'; 
+    	$this->assign([
+            'attrRes'=>$attrRes,
+            'priceSection'=>$priceSection,
+            'brandRes'=>$brandRes,
+            'goodsRes'=>$goodsRes,
+            'cateId'=>$id,
+            'ob'       => $ob,
+            'ow'       => $ow,
+        ]);
         return view('category');
     }
 
@@ -53,5 +78,7 @@ class Category extends Base
     	$data['cat_id']=$id;
     	return json($data);
     }
+
+   
 
 }

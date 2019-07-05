@@ -23,6 +23,27 @@ function encryption(string $value,$type=0){
    }
 }
 
+/**
+ * 二维数组按照指定键值去重  tongpankt.com
+ * @param $arr 需要去重的二维数组
+ * @param $key 需要去重所根据的索引
+ * @return mixed
+ */
+function assoc_unique($arr, $key)
+{
+    $tmp_arr = array();
+    foreach($arr as $k => $v) {
+        if(in_array($v[$key],$tmp_arr)) {  //搜索$v[$key]是否在$tmp_arr数组中存在，若存在返回true
+            unset($arr[$k]);
+        } else {
+            $tmp_arr[] = $v[$key];
+        }
+    }
+    sort($arr); //sort函数对数组进行排序
+    return $arr;
+}
+
+
 
 //图片资源处理函数
 function my_scandir($dir=UEDITOR){
